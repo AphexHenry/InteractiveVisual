@@ -1,0 +1,25 @@
+extends layout
+
+block content
+	div(id="app")
+		div(id="mixer")
+			div(class="videoUI")
+				ul(id="trash", class="connected")
+				div() user name
+				div(style="display:inline;")
+					input(type="text", name="user", id="userName")
+					button(onclick="fetchForUser()") fetch vines
+				div() tag
+				div(style="display:inline;")
+					input(type="text", name="tag", id="tag")
+					button(onclick="exportToDB()") export selection to db
+		div(id="feed")
+			ul(id="incoming", class="connected")
+
+	link(rel='stylesheet', href='/css/style.css', media='screen', charset='utf-8')
+	link(rel='stylesheet', href='/css/monitor.css', media='screen', charset='utf-8')
+	script(src="/socket.io/socket.io.js")
+
+	script(src="js/monitor/monitorApp.js")
+	script(src="js/composer/listener.js")
+	script(src="js/composer/utils.js")

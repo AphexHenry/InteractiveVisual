@@ -1,0 +1,15 @@
+
+
+#trash {
+	width: 230px;
+	height: 230px;
+	background-color: #2693fd;
+}
+
+#trash li {
+	color: #eeeeee;
+	padding: 5px;
+	width: 220px;
+	height: 220px;
+	background-color: #2693fd;
+}

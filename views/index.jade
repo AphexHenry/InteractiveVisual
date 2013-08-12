@@ -1,0 +1,24 @@
+extends layout
+
+block content
+	div(id="app")
+		hr(class="separator")
+		div(id="GeneralGUI")
+			h3() General
+			button(type="button", onclick="syncButton('tempo')", class='btn') tempo
+		hr(class="separator")
+		div(id="LeftGUI")
+
+	link(rel='stylesheet', href='/css/lib/farbtastic.css', media='screen', charset='utf-8')
+	link(rel='stylesheet', href='/css/style.css', media='screen', charset='utf-8')
+
+	
+	script(src="js/libs/farbtastic.js")
+	script(src="/socket.io/socket.io.js")
+	script(src="js/composer/cookieManager.js")
+	script(src="js/composer/listener.js")
+	script(src="js/composer/utils.js")
+	script(src="js/composer/serverRTC.js")
+	script(src="js/composer/communicationManager.js")
+	script(src="js/composer/keyInput.js")
+	script(src="js/composer/vjapp.js")
