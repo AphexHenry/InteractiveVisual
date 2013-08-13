@@ -182,3 +182,7 @@ function loadjsfile(filename, callback, isGUI)
 
     oHead.appendChild(fileref);
 }
+
+function getFunctionByName(functionName) {
+    return window[functionName];
+}

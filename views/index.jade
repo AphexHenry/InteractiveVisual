@@ -3,11 +3,19 @@ extends layout
 block content
 	div(id="app")
 		hr(class="separator")
-		div(id="GeneralGUI")
-			h3() General
-			button(type="button", onclick="syncButton('tempo')", class='btn') tempo
-		hr(class="separator")
-		div(id="LeftGUI")
+		div(class="row")
+			div(id="GeneralGUI", style="float:left;")
+				h3() General
+				div(id="elementTable", class="groupGUI")
+					h4() extra shader
+					div(class="btn-group", data-toggle="buttons-radio")
+						button(type="button", class="btn btn-primary", name="dot") Dot
+						button(type="button", class="btn btn-primary", name="convolution") convolution
+						button(type="button", class="btn btn-primary", name="screen") screen
+
+			div(id="LeftGUI", style="float:right;")
+				h3() Specific
+				div(id="elementTableSpec", class="groupGUI")
 
 	link(rel='stylesheet', href='/css/lib/farbtastic.css', media='screen', charset='utf-8')
 	link(rel='stylesheet', href='/css/style.css', media='screen', charset='utf-8')

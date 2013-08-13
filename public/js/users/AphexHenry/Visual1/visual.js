@@ -1,16 +1,11 @@
 
 function Visual() {
 
-    this.name = "wave matrix";
-    this.scene = new THREE.Scene();
-    this.scene.fog = new THREE.FogExp2( 0x000000, 0.0016 );
-    renderer.setClearColor( this.scene.fog.color, 1 );
+}
 
-    this.camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 3000 );
-    this.camera.position.z = 1200;
-    this.scene.add( this.camera );
-
-    this.geometry = new THREE.Geometry();
+Visual.prototype.Setup = function()
+{
+        this.geometry = new THREE.Geometry();
     this.geometry2 = new THREE.Geometry();
 
     this.n = 1000;
@@ -53,11 +48,6 @@ function Visual() {
     var ygrid = 15;
     this.nribbons = xgrid * ygrid;
     var ribbon;
-
-    cube = new THREE.Mesh( new THREE.CubeGeometry( 200, 200, 200 ), new THREE.MeshNormalMaterial() );
-    cube.position.y = 150;
-
-    scene.addObject( cube );
 
     c = 0;
     this.materials = [];
@@ -111,16 +101,6 @@ function Visual() {
 
     this.scene.matrixAutoUpdate = false;
 
-    var renderModel = new THREE.RenderPass( this.scene, this.camera );
-    this.effectBloom = new THREE.BloomPass( 1.0 );
-    var effectScreen = new THREE.ShaderPass( THREE.ShaderExtras[ "screen" ] );
-
-    effectScreen.renderToScreen = true;
-
-    composer.addPass( renderModel );
-    composer.addPass( this.effectBloom );
-    composer.addPass( effectScreen );
-
     this.timer = 0.;
 }
 
@@ -129,7 +109,7 @@ Visual.prototype.Update = function(aTimeInterval)
     this.timer += (sTempoManager.GetTempo() / 120.) * aTimeInterval;
     var time = this.timer / 20.;
 
-    this.effectBloom.screenUniforms[ "opacity" ].value = 3. + 1. * Math.cos(time * 2.5);//sAudioInput.GetBass() * 4.;
+    // this.effectBloom.screenUniforms[ "opacity" ].value = 3. + 1. * Math.cos(time * 2.5);//sAudioInput.GetBass() * 4.;
 
     this.camera.position.x += ( this.scene.position.x + Math.cos(time * -2.1) * 700 - this.camera.position.x) * 0.036;
     this.camera.position.y += ( this.scene.position.y + Math.sin(time * -1.33) * Math.sin(time * -1.13) * 600 - this.camera.position.y ) * 0.036;

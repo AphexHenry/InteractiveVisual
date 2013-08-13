@@ -13,6 +13,12 @@ var sAnimationLoader = new AnimationLoader();
 
 $(function () {
   var mKeyInput = new KeyInput();
+
+  $('.btn-primary').click(function(ev) {
+      $('.btn-primary').removeClass('active');
+      syncButton(ev);
+    });
+
   var lRequestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                               window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
   window.requestAnimationFrame = lRequestAnimationFrame;
@@ -64,19 +70,19 @@ function AddSlider(aName, value, aMin, aMax, aGlobal, id)
       aMax = 1.;
   }
 
-  var $lBase = $("<div class='row NewEl'> </div>");
-  $lBase.append("<span class='span2 NewEl'>" + aName + "</span><br>");
+  var $lBase = $("<div class='NewEl'> </div>");
+  $lBase.append("<h4>" + aName + "</h4><span class='span2 NewEl'></span>");
   
   var $lSlider = $('<input class="mySlider span3" type="text" name="' + id + '" value="0" data-slider-min="' + aMin +'" data-slider-max="' + aMax + '" data-slider-step="0.01" data-slider-value="0" data-slider-orientation="horizontal" data-slider-id="leftSpeedS" data-slider-selection="before" data-slider-tooltip="hide"></input>');
   $lBase.append($lSlider);
 
   if(isdefined(aGlobal) && aGlobal)
   {
-    $('#GeneralGUI').append($lBase);
+    $('#elementTable').append($lBase);
   }
   else
   {
-    $('#LeftGUI').append($lBase);
+    $('#elementTableSpec').append($lBase);
   }
 
   $lSlider.slider('setValue', value);
@@ -85,13 +91,27 @@ function AddSlider(aName, value, aMin, aMax, aGlobal, id)
   });
 }
 
+function AddButton(aName, aId, aGlobal)
+{
+  var $lButton = $('<button type="button" name="'+ aId + '" class="btn">' + aName + '</button>');
+  if(isdefined(aGlobal) && aGlobal)
+  {
+    $('#elementTable').append($lButton);
+  }
+  else
+  {
+    $('#elementTableSpec').append($lButton);
+  }
+  $lButton.click(syncButton);
+}
+
 function colorPickerChange(ev)
 {
   sCommunicationManager.syncColor(ev.name, ev.color);
   console.log("color change: " + ev.color);
 }
 
-function syncButton(name)
+function syncButton(ev)
 {
-  sCommunicationManager.syncButton(name);
+  sCommunicationManager.syncButton(ev.currentTarget.name);
 }

@@ -40,14 +40,19 @@ Control.prototype.SetCurrentName = function(aName)
 
 Control.prototype.GetNumber = function(aName, aIsGeneral)
 {
+    var lReturn;
     if(isdefined(aIsGeneral) && aIsGeneral)
     {
-       return this.mapperSlider[aName]; 
+       lReturn = this.mapperSlider[aName]; 
     }
     else
     {
-        return this.mapperSlider[this.visuName + aName];
+        lReturn = this.mapperSlider[this.visuName + aName];
     }
+    if(!isdefined(lReturn))
+        return 1;
+    else
+        return lReturn;
 }
 
 Control.prototype.GetColor = function(aName)
@@ -69,6 +74,11 @@ Control.prototype.GetColorHSV = function(aName)
 Control.prototype.AddSlider = function(aName, value)
 {
     control.mapperSlider[aName] = value;
+}
+
+AddButton = function(aName, aId, aIsGlobal)
+{
+    control.AddButton(aId, getFunctionByName(aId));
 }
 
 AddColor = function(aName, value, id)

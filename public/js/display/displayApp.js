@@ -38,17 +38,35 @@ function init() {
 
     sURLHash = "uniqueToken";
     connectRTC(sURLHash);
-
-    function tickTempo()
-    {
-        sTempoManager.Tick();
-    }
     
-    control.AddButton('tempo', tickTempo);
+    function compoSwitchConvo()
+    {
+        sVisuals[0].ResetShaders("focus");
+    }
 
-    sAnimationLoader.Load([{user:'AphexHenry', visual:'Visual2', file:'visual.js'}, {user:'AphexHenry', visual:'Visual2', file:'GUI.js'}]);
+    function compoSwitchScreen()
+    {
+        sVisuals[0].ResetShaders("screen");   
+    }
+
+    function compoSwitchDot()
+    {
+        sVisuals[0].ResetShaders("dotscreen");   
+    }
+
+    control.AddButton('tempo', tickTempo);
+    control.AddButton('convolution', compoSwitchConvo);
+    control.AddButton('dot', compoSwitchDot);
+    control.AddButton('screen', compoSwitchScreen);
+
+    sAnimationLoader.Load([{user:'AphexHenry', visual:'Visual1', file:'GUI.js'}, {user:'AphexHenry', visual:'Visual1', file:'visual.js'}]);
 
     GlobalGUI();
+}
+
+function tickTempo()
+{
+    sTempoManager.Tick();
 }
 
 function onDocumentMouseMove( event ) {
@@ -93,6 +111,7 @@ function animate() {
 
     for(var i = 0; i< sVisuals.length; i++)
     {
+        sVisuals[i].effectBloom.screenUniforms[ "opacity" ].value = control.GetNumber('glow', true);
         control.SetCurrentName(sVisuals[i]._mUser + sVisuals[i]._mVisual);
         sVisuals[i].Update(lTimeElapsed);
     }

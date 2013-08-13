@@ -52,9 +52,10 @@ AnimationLoader.prototype.AnimationLoaded = function(aIsGUI)
 	}
 	else
 	{
-		var lNewVisu = new Visual();
+		var lNewVisu = new CompleteVisualizer(Visual);
 		lNewVisu._mUser = this.animationToLoad[this.animationIndex].user;
 		lNewVisu._mVisual = this.animationToLoad[this.animationIndex].visual;
+		lNewVisu.SetupAll();
 		sVisuals.push(lNewVisu);
 	}
 
