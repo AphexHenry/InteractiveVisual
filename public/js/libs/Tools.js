@@ -186,3 +186,6 @@ function loadjsfile(filename, callback, isGUI)
 function getFunctionByName(functionName) {
     return window[functionName];
 }
+
+var NAME_USER = "AphexHenry";
+var NAME_VISUAL = "Visual2";

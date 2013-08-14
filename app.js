@@ -5,6 +5,7 @@
 var express = require('express')
   , http = require('http')
   , path = require('path')
+  , fs = require('fs')
   , helpers = require('./lib/helpers.js')
   , vinelib = require('./lib/vineAgent.js')
   , sio     = require('socket.io')         // web socket external module
@@ -132,10 +133,25 @@ io.sockets.on('connection', function (socket) {
         c.onSocketDisconnect(io, socket, connectionEasyRtcId);
     });
 
-    // monitor get
-    socket.on('get:Animations', function(aData)
+    socket.on('get:GUI', function(aData)
     {   
-        socket.emit('animations', JSON.stringify([{user:"AphexHenry", visual:"Visual1", file:"GUI.js"}, {user:"AphexHenry", visual:"Visual2", file:"GUI.js"}]));
+        socket.emit('animations', JSON.stringify([{user:aData.user, visual:aData.name, file:"GUI.js"}]));
+    });
+
+    socket.on('get:CodeString', function(aData)
+    {   
+      socket.emit('animations', JSON.stringify({user:aData.user, visual:aData.name, file:"visual.js"}));
+    });
+
+    socket.on('save:code', function(aData)
+    {   
+      fs.writeFile("public/js/users/" + aData.user + "/" + aData.name + "/visual.js", aData.code, function(err) {
+        if(err) {
+            console.log(err);
+        } else {
+            console.log("The file was saved!");
+        }
+    });
     });
 });
 

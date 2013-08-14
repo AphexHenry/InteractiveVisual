@@ -1,0 +1,28 @@
+
+
+.CodeMirror {
+border: 1px solid #eee;
+height: auto;
+}
+.CodeMirror-scroll {
+overflow-y: hidden;
+overflow-x: auto;
+}
+
+.saveButton{
+	position:fixed;
+	top:20px;
+	right:20px;
+}
+
+.mySwitch{
+	position:absolute;
+	right:20px;
+}
+
+#CodeGUISwitch
+{
+	position:fixed;
+	top:20px;
+	right:47%;
+}

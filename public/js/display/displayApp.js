@@ -59,7 +59,7 @@ function init() {
     control.AddButton('dot', compoSwitchDot);
     control.AddButton('screen', compoSwitchScreen);
 
-    sAnimationLoader.Load([{user:'AphexHenry', visual:'Visual1', file:'GUI.js'}, {user:'AphexHenry', visual:'Visual1', file:'visual.js'}]);
+    sAnimationLoader.Load([{user:NAME_USER, visual:NAME_VISUAL, file:'GUI.js'}, {user:NAME_USER, visual:NAME_VISUAL, file:'visual.js'}]);
 
     GlobalGUI();
 }

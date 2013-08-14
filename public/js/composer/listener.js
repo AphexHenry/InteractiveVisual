@@ -13,5 +13,6 @@ socket.on('animations', function (data) {
 
 function GetAnimations()
 {
-  socket.emit('get:Animations');
+	var object = {user:NAME_USER, name:NAME_VISUAL};
+  	socket.emit('get:GUI', object);
 }

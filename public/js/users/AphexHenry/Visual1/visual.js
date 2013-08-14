@@ -109,8 +109,6 @@ Visual.prototype.Update = function(aTimeInterval)
     this.timer += (sTempoManager.GetTempo() / 120.) * aTimeInterval;
     var time = this.timer / 20.;
 
-    // this.effectBloom.screenUniforms[ "opacity" ].value = 3. + 1. * Math.cos(time * 2.5);//sAudioInput.GetBass() * 4.;
-
     this.camera.position.x += ( this.scene.position.x + Math.cos(time * -2.1) * 700 - this.camera.position.x) * 0.036;
     this.camera.position.y += ( this.scene.position.y + Math.sin(time * -1.33) * Math.sin(time * -1.13) * 600 - this.camera.position.y ) * 0.036;
     this.camera.position.z = this.scene.position.z + Math.cos(time * -1.2) * 400;

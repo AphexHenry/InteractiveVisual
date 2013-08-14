@@ -9,6 +9,7 @@ function AudioInput()
 	this.bufferLong = [];
 	this.bass = 0.;
 	this.rms = 0.;
+	this.rmsNow = 0.;
 	this.spectrum = new Uint8Array( this.buflen );
 	var audioContext = new window.webkitAudioContext();	
 
@@ -58,13 +59,13 @@ AudioInput.prototype.Update = function()
 {
 	var filterOrder = 10;
 	var coeffMult = (1. / (filterOrder));
-	var amortissementRMS = 0.02;
+	var amortissementRMS = 0.005;
 	var lSensitivity = control.GetNumber('sensitivity', true) * 2.;
 	if(this.analyser != undefined)
 	{
 		this.analyser.getByteTimeDomainData( this.buf );
 		this.UpdateBass();
-		var rmsFrame;
+		var rmsFrame = 0.;
 		for(var i = 0; i < this.buf.length; i++)
 		{
 			if(i > filterOrder - 1)
@@ -79,7 +80,7 @@ AudioInput.prototype.Update = function()
 			{
 				this.bufferNorm[i] = ((this.buf[i] / 256.) - 0.5);
 			}
-			rmsFrame += this.bufferNorm[i];
+			rmsFrame += this.bufferNorm[i] * this.bufferNorm[i];
 		}
 
 		for(var i = 0; i < this.buf.length; i++)
@@ -88,12 +89,20 @@ AudioInput.prototype.Update = function()
 		}
 
 		rmsFrame = lSensitivity * rmsFrame / this.bufferNorm.length;
-
+		this.rmsNow = 0.1 * rmsFrame + 0.9 * this.rmsNow;
 		this.rms = amortissementRMS * rmsFrame + (1. - amortissementRMS) * this.rms;
 		this.bufferLong = this.bufferLong.concat(this.bufferNorm);
 		if(this.bufferLong.length > 200000)
 		{
 			this.bufferLong.splice(0, this.buf.length);
+		}
+		if(isNaN(this.rmsNow))
+		{
+			this.rmsNow = 0.;
+		}
+		if(isNaN(this.rms))
+		{
+			this.rms = 0.;
 		}
 	}
 }
@@ -109,6 +118,11 @@ AudioInput.prototype.UpdateBass = function()
 	}
 
 	this.bass = (bass * 0.5 / (numPt)) + this.bass * 0.5;
+}
+
+AudioInput.prototype.GetLoudness = function()
+{
+	return this.rmsNow / (0.000001 + this.rms);
 }
 
 AudioInput.prototype.GetBuffer = function()

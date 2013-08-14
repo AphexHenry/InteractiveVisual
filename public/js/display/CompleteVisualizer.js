@@ -17,9 +17,18 @@ function CompleteVisualizer(aVisu)
         this.SetupShaders = this.mVisu.SetupShaders;
     }
 
-    this.Update = this.mVisu.Update;
-    this.Setup = this.mVisu.Setup;
+    if(isdefined(this.mVisu.Update))
+    {
+        this.Update = this.mVisu.Update;
+    }
+    
+    if(isdefined(this.mVisu.Setup))
+    {
+        this.Setup = this.mVisu.Setup;
+    }
 }
+
+CompleteVisualizer.prototype.Setup = function(){}
 
 CompleteVisualizer.prototype.SetupAll = function()
 {
@@ -43,17 +52,21 @@ CompleteVisualizer.prototype.SetupCamera = function()
     this.scene.add( this.camera );
 }
 
+CompleteVisualizer.prototype.Update = function()
+{
+}
+
 CompleteVisualizer.prototype.SetupShaders = function()
 {
     var renderModel = new THREE.RenderPass( this.scene, this.camera );
     this.effectBloom = new THREE.BloomPass( 1.0 );
     this.effectScreen = new THREE.ShaderPass( THREE.ShaderExtras[ "screen" ] );
 
-    effectScreen.renderToScreen = true;
+    this.effectScreen.renderToScreen = true;
 
     composer.addPass( renderModel );
     composer.addPass( this.effectBloom );
-    composer.addPass( effectScreen );
+    composer.addPass( this.effectScreen );
 }
 
 CompleteVisualizer.prototype.ResetShaders = function(aName)
@@ -65,9 +78,9 @@ CompleteVisualizer.prototype.ResetShaders = function(aName)
     this.effectBloom = new THREE.BloomPass( 1.0 );
     this.effectScreen = new THREE.ShaderPass( THREE.ShaderExtras[ aName ] );
 
-    effectScreen.renderToScreen = true;
+    this.effectScreen.renderToScreen = true;
 
     composer.addPass( renderModel );
     composer.addPass( this.effectBloom );
-    composer.addPass( effectScreen );
+    composer.addPass( this.effectScreen );
 }
