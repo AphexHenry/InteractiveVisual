@@ -1,7 +1,6 @@
 
 var connectID;
-
-control = new Control();
+var sOtherSessionID;
 
 /*
   Quick sketch of an UI for a VJ application.
@@ -35,9 +34,10 @@ function loginFailure(message) {
 function loggedInListener (data) {
     for(var i in data) 
     {
-        // performCall(i);
+        performCall(i);
         break;
     }
+    sOtherSessionID = data;
 }
 
 function performCall(otherEasyrtcid) {
@@ -50,7 +50,7 @@ function performCall(otherEasyrtcid) {
                 }
             }, 
             function(errText) {
-                alert("err: " +errText);
+                // alert("err: " +errText);
             }, 
             function(wasAccepted) {
                 console.log("was accepted=" + wasAccepted);
@@ -65,6 +65,23 @@ function performCall(otherEasyrtcid) {
 function disconnect() {
     easyRTC.disconnect();
     console.log("disconnecting from server");
+}
+
+function sendStuffP2P(text) {  
+    for(var i in sOtherSessionID) 
+    {  
+        if(text.replace(/\s/g, "").length == 0) { // Don't send just whitespace
+            return;
+        }   
+        if( easyRTC.getConnectStatus(i) == easyRTC.IS_CONNECTED) {
+            console.log(text)
+            easyRTC.sendDataP2P(i, text);                
+        }
+        else {
+            console.log("not connected to " + i + " yet.");
+        }
+        addToConversation("Me", text);       
+    }
 }
 
 

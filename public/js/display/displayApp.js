@@ -62,6 +62,12 @@ function init() {
     sAnimationLoader.Load([{user:NAME_USER, visual:NAME_VISUAL, file:'GUI.js'}, {user:NAME_USER, visual:NAME_VISUAL, file:'visual.js'}]);
 
     GlobalGUI();
+
+    function UpdateCode()
+    {
+        sAnimationLoader.Load([{user:NAME_USER, visual:NAME_VISUAL, file:'GUI.js'}, {user:NAME_USER, visual:NAME_VISUAL, file:'visual.js'}]);
+    }
+    control.AddButton('UpdateCode', UpdateCode);
 }
 
 function tickTempo()
@@ -96,6 +102,22 @@ function onDocumentTouchMove( event ) {
         mouseX = event.touches[ 0 ].pageX - windowHalfX;
         mouseY = event.touches[ 0 ].pageY - windowHalfY;
     }
+}
+
+
+AddButton = function(aName, aId, aIsGlobal)
+{
+    control.AddButton(aId, getFunctionByName(aId));
+}
+
+AddColor = function(aName, value, id)
+{
+    control.mapperColor[id] = value;
+}
+
+AddSlider = function(aName, value, min, max, isGlobal, id)
+{
+    control.mapperSlider[id] = value;
 }
 
 function animate() {

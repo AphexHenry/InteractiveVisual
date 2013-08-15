@@ -9,6 +9,7 @@ var sOtherSessionID;
 function addToConversation(who, content) {
     // Escape html special characters, then add linefeeds.
     console.log("data received = " + content + " from " + who);
+    control.Parse(content);
 }
 
 function connectRTC(aChannel) {
@@ -17,7 +18,7 @@ function connectRTC(aChannel) {
     easyRTC.enableVideo(false);
     easyRTC.enableAudio(false);
 
-    easyRTC.setDataListener();
+    easyRTC.setDataListener(addToConversation);
     easyRTC.setLoggedInListener(loggedInListener);
     easyRTC.connect(aChannel, loginSuccess, loginFailure);
     
@@ -64,7 +65,6 @@ function performCall(otherEasyrtcid) {
     }
 }
 
-
 function disconnect() {
     document.getElementById("info").innerHTML = "logged out";
     easyRTC.disconnect();
@@ -83,7 +83,6 @@ function sendStuffP2P(text) {
         }
         else {
             console.log("not connected to " + i + " yet.");
-        }
-        addToConversation("Me", text);       
+        }     
     }
 }

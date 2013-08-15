@@ -10,8 +10,10 @@ var sTempo = 100;
 var sLastTempoPush = 0;
 var sColorPicker;
 var sAnimationLoader = new AnimationLoader();
+var sBaseGUISpec;
 
 $(function () {
+  sBaseGUISpec = $('#elementTableSpec');
   var mKeyInput = new KeyInput();
 
   $('.btn-primary').click(function(ev) {
@@ -43,6 +45,14 @@ $(function () {
   GlobalGUI();
 
   GetAnimations();
+
+  function UpdateCode()
+  {
+    sBaseGUISpec.empty();
+    // GlobalGUI();
+  }
+
+  control.AddButton('UpdateCode', UpdateCode);
 
 }());
 
@@ -82,7 +92,7 @@ function AddSlider(aName, value, aMin, aMax, aGlobal, id)
   }
   else
   {
-    $('#elementTableSpec').append($lBase);
+    sBaseGUISpec.append($lBase);
   }
 
   $lSlider.slider('setValue', value);
@@ -101,7 +111,7 @@ function AddButton(aName, aId, aGlobal)
   }
   else
   {
-    $('#elementTableSpec').append($lBase);
+    sBaseGUISpec.append($lBase);
   }
   $lBase.append($lButton);
   $lButton.click(syncButton);
@@ -117,3 +127,4 @@ function syncButton(ev)
 {
   sCommunicationManager.syncButton(ev.currentTarget.name);
 }
+

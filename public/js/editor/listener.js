@@ -22,4 +22,8 @@ function SaveCode(aCode)
   	socket.emit('save:code', object);
 }
 
+socket.on('CodeSaved', function(){
+	sCommunicationManager.syncButton('UpdateCode');
+});
+
 GetCode();

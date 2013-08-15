@@ -76,21 +76,6 @@ Control.prototype.AddSlider = function(aName, value)
     control.mapperSlider[aName] = value;
 }
 
-AddButton = function(aName, aId, aIsGlobal)
-{
-    control.AddButton(aId, getFunctionByName(aId));
-}
-
-AddColor = function(aName, value, id)
-{
-    control.mapperColor[id] = value;
-}
-
-AddSlider = function(aName, value, min, max, isGlobal, id)
-{
-    control.mapperSlider[id] = value;
-}
-
 Control.prototype.Parse = function(aString)
 {
     if(!isdefined(aString))
@@ -103,3 +88,4 @@ Control.prototype.Parse = function(aString)
     this.methodMapper[controlPath](values);
 }
 
+control = new Control();

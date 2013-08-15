@@ -149,6 +149,7 @@ io.sockets.on('connection', function (socket) {
         if(err) {
             console.log(err);
         } else {
+            socket.emit('CodeSaved');
             console.log("The file was saved!");
         }
     });

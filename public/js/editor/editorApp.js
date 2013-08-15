@@ -1,4 +1,7 @@
 
+var sURLHash = "uniqueToken";
+connectRTC(sURLHash);
+var sCommunicationManager = new CommunicationManager();
 
 $('#CodeGUISwitch').on('switch-change', function (e, data) 
 {
