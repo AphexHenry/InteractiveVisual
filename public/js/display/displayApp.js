@@ -46,7 +46,7 @@ function init() {
 
     function compoSwitchScreen()
     {
-        sVisuals[0].ResetShaders("screen");   
+        sVisuals[0].ResetShaders("film");   
     }
 
     function compoSwitchDot()

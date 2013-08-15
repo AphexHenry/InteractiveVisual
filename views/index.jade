@@ -4,23 +4,23 @@ block content
 	div(id="app")
 		hr(class="separator")
 		div(class="row")
-			div(id="GeneralGUI", style="float:left;")
-				h3() General
-				div(id="elementTable", class="groupGUI")
-					h4() extra shader
-					div(class="btn-group", data-toggle="buttons-radio")
-						button(type="button", class="btn btn-primary", name="dot") Dot
-						button(type="button", class="btn btn-primary", name="convolution") convolution
-						button(type="button", class="btn btn-primary", name="screen") screen
-
-			div(id="LeftGUI", style="float:right;")
-				h3() Specific
-				div(id="elementTableSpec", class="groupGUI")
+			div(class="col-6")
+				div(id="GeneralGUI")
+					h3() General
+					div(id="elementTable", class="groupGUI")
+						h4() extra shader
+						div(class="btn-group", data-toggle="buttons-radio")
+							button(type="button", class="btn btn-primary", name="dot") Dot
+							button(type="button", class="btn btn-primary", name="convolution") convolution
+							button(type="button", class="btn btn-primary", name="screen") screen
+			div(class="col-6")
+				div(id="LeftGUI")
+					h3() Specific
+					div(id="elementTableSpec", class="groupGUI")
 
 	link(rel='stylesheet', href='/css/lib/farbtastic.css', media='screen', charset='utf-8')
 	link(rel='stylesheet', href='/css/style.css', media='screen', charset='utf-8')
 
-	
 	script(src="js/libs/farbtastic.js")
 	script(src="/socket.io/socket.io.js")
 	script(src="js/composer/cookieManager.js")

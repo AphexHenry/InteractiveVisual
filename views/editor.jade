@@ -5,8 +5,10 @@ block content
 	button(id="saveButton", type="button", class="btn saveButton btn-primary", data-loading-text="saving...") save
 	div(class="make-switch", id="CodeGUISwitch", data-on="info", data-off="success", data-on-label="Code", data-off-label="GUI")
 		input(type="checkbox", checked)
-	div(id="app")
-
+	div(id="myCarousel", class="carousel slide")
+		div(class="carousel-inner")
+			div(id="GUI", class="item")
+			div(id="code", class="item active")
 
 	script(src="/socket.io/socket.io.js")
 

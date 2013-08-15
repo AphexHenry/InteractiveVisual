@@ -24,8 +24,8 @@ CodeParser.prototype.Parse = function(aData)
 CodeParser.prototype.SetupFunction = function(aObject, aName)
 {
 	var codeSetup = this.GetCodeFunction(aObject);
-	var $lSubBase = $('#app');
-	var $lBase = $('<div></div>');
+	var $lSubBase = $('#code');
+	var $lBase = $('<div class="blockCode"></div>');
 	var $lBaseContent = $('<div></div>');
 	$lSubBase.append($lBase);
 	var lChecked = "";
@@ -47,11 +47,11 @@ CodeParser.prototype.SetupFunction = function(aObject, aName)
 	var lNameObj = 'code' + aName;
 	if(aName == "Update")
 	{
-		$lBase.append('<p class = '+ classText +'>' + aName + '(aDelta) <br> {</p>');	
+		$lBase.append('<hr><p class = '+ classText +'>' + aName + '(aDelta) <br> {</p>');	
 	}
 	else
 	{
-		$lBase.append('<p class = '+ classText +'>' + aName + '( ) <br> {</p>');	
+		$lBase.append('<hr><p class = '+ classText +'>' + aName + '( ) <br> {</p>');	
 	}
 	
 	$lBase.append($lBaseContent);
@@ -65,7 +65,7 @@ CodeParser.prototype.SetupFunction = function(aObject, aName)
 	
 	this.codeList.push({code:codeMirror, name:aName, switch:$lSwitch});
 
-	$lBase.append('<h5>}</h5><br>');
+	$lBase.append('<h5>}</h5>');
 	if(isDefault)
 	{
 		$lBaseContent.slideUp();

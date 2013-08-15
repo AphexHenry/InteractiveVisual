@@ -93,15 +93,17 @@ function AddSlider(aName, value, aMin, aMax, aGlobal, id)
 
 function AddButton(aName, aId, aGlobal)
 {
+  var $lBase = $("<div class='NewEl'> </div>");
   var $lButton = $('<button type="button" name="'+ aId + '" class="btn">' + aName + '</button>');
   if(isdefined(aGlobal) && aGlobal)
   {
-    $('#elementTable').append($lButton);
+    $('#elementTable').append($lBase);
   }
   else
   {
-    $('#elementTableSpec').append($lButton);
+    $('#elementTableSpec').append($lBase);
   }
+  $lBase.append($lButton);
   $lButton.click(syncButton);
 }
 
