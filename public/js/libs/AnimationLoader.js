@@ -56,7 +56,7 @@ AnimationLoader.prototype.AnimationLoaded = function(aIsGUI)
 		lNewVisu._mUser = this.animationToLoad[this.animationIndex].user;
 		lNewVisu._mVisual = this.animationToLoad[this.animationIndex].visual;
 		lNewVisu.SetupAll();
-		sVisuals.push(lNewVisu);
+		sVisuals[0] = lNewVisu;
 	}
 
 	this.animationIndex++;

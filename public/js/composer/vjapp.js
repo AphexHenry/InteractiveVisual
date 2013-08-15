@@ -10,10 +10,10 @@ var sTempo = 100;
 var sLastTempoPush = 0;
 var sColorPicker;
 var sAnimationLoader = new AnimationLoader();
-var sBaseGUISpec;
+var $sBaseGUISpec;
 
 $(function () {
-  sBaseGUISpec = $('#elementTableSpec');
+  $sBaseGUISpec = $('#elementTableSpec');
   var mKeyInput = new KeyInput();
 
   $('.btn-primary').click(function(ev) {
@@ -40,7 +40,7 @@ $(function () {
 
   sURLHash = sCookieManager.check("name", "uniqueToken");
 
-  connectRTC(sURLHash);
+  rtcManager.connect(sURLHash);
 
   GlobalGUI();
 
@@ -48,8 +48,13 @@ $(function () {
 
   function UpdateCode()
   {
-    sBaseGUISpec.empty();
-    // GlobalGUI();
+    // var children = $sBaseGUISpec.children();
+    $sBaseGUISpec.empty();
+    // for(i in children)
+    // {
+      // sBaseGUISpec.remove(children);
+    // }
+    GetAnimations();
   }
 
   control.AddButton('UpdateCode', UpdateCode);
@@ -58,10 +63,10 @@ $(function () {
 
 function AddColor(aName, value, aId)
 {
-  $('#LeftGUI').append( "<h3>" + aName + "</h3>" );
+  $sBaseGUISpec.append( "<h3>" + aName + "</h3>" );
   var lContainer = $("<div class='row NewEl form-item'></div>");
   var newPickerDiv = $("<div id='picker'></div>")
-  $('#LeftGUI').append(lContainer);
+  $sBaseGUISpec.append(lContainer);
   lContainer.append("<span class='span2 NewEl'>");
   lContainer.append(newPickerDiv);
   var lPicker = $.farbtastic($(newPickerDiv), colorPickerChange, aId);
@@ -92,7 +97,7 @@ function AddSlider(aName, value, aMin, aMax, aGlobal, id)
   }
   else
   {
-    sBaseGUISpec.append($lBase);
+    $sBaseGUISpec.append($lBase);
   }
 
   $lSlider.slider('setValue', value);
@@ -111,7 +116,7 @@ function AddButton(aName, aId, aGlobal)
   }
   else
   {
-    sBaseGUISpec.append($lBase);
+    $sBaseGUISpec.append($lBase);
   }
   $lBase.append($lButton);
   $lButton.click(syncButton);

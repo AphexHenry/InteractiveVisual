@@ -1,6 +1,6 @@
 
 var sURLHash = "uniqueToken";
-connectRTC(sURLHash);
+rtcManager.connect(sURLHash);
 var sCommunicationManager = new CommunicationManager();
 
 $('#CodeGUISwitch').on('switch-change', function (e, data) 
@@ -10,12 +10,10 @@ $('#CodeGUISwitch').on('switch-change', function (e, data)
 	if(!data.value)
 	{
 		$('#GUI').addClass('active');
-		// $('#myCarousel').carousel('prev');
 	}
 	else
 	{
 		$('#code').addClass('active');
-		// $('#myCarousel').carousel('next');
 	}
 });
 
