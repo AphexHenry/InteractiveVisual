@@ -5,10 +5,17 @@ block content
 	button(id="saveButton", type="button", class="btn saveButton btn-primary", data-loading-text="saving...") save
 	div(class="make-switch", id="CodeGUISwitch", data-on="info", data-off="success", data-on-label="Code", data-off-label="GUI")
 		input(type="checkbox", checked)
-	div(id="myCarousel", class="carousel slide")
-		div(class="carousel-inner")
-			div(id="GUI", class="item")
-			div(id="code", class="item active")
+	div(id="Codes")
+		div(id="GUI", class="item unactive")
+			div(class="btn-group")
+				button(type="button", class="btn btn-default dropdown-toggle", data-toggle="dropdown") Add Input
+					span(class="caret")
+				ul(class="dropdown-menu")
+					li()
+						a(onclick="AddDefaultNumber()") number
+					li() 
+						a(onclick="AddDefaultColor()") color
+		div(id="code", class="item")
 
 	script(src="/socket.io/socket.io.js")
 
@@ -18,6 +25,11 @@ block content
 	script(src="js/libs/codemirror/mode/javascript/javascript.js")
 	script(src="js/libs/codemirror/keymap/extra.js")
 	
+	link(rel='stylesheet', href='/css/lib/farbtastic.css', media='screen', charset='utf-8')
+	link(rel='stylesheet', href='/css/style.css', media='screen', charset='utf-8')
+
+	script(src="js/libs/farbtastic.js")
+
 	link(rel='stylesheet', href='/css/style.css', media='screen', charset='utf-8')
 	link(rel='stylesheet', href='/css/editor.css', media='screen', charset='utf-8')
 	script(src="js/editor/codeParser.js")

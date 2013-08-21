@@ -137,12 +137,12 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('get:GUI', function(aData)
     {   
-        socket.emit('animations', JSON.stringify([{user:aData.user, visual:aData.name, file:"GUI.js"}]));
+        socket.emit('send:GUI', JSON.stringify([{user:aData.user, visual:aData.name, file:"GUI.js"}]));
     });
 
-    socket.on('get:CodeString', function(aData)
+    socket.on('get:Code', function(aData)
     {   
-      socket.emit('animations', JSON.stringify({user:aData.user, visual:aData.name, file:"visual.js"}));
+      socket.emit('send:code', JSON.stringify({user:aData.user, visual:aData.name, file:"visual.js"}));
     });
 
     socket.on('save:code', function(aData)
@@ -155,6 +155,18 @@ io.sockets.on('connection', function (socket) {
             console.log("The file was saved!");
         }
     });
+    });
+
+    socket.on('save:GUI', function(aData)
+    {   
+      fs.writeFile("public/js/users/" + aData.user + "/" + aData.name + "/GUI.js", aData.code, function(err) {
+        if(err) {
+            console.log(err);
+        } else {
+            socket.emit('GUISaved');
+            console.log("The file was saved!");
+        }
+     });
     });
 });
 

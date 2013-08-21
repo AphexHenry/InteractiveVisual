@@ -6,7 +6,7 @@ socket.on('messageDB', function (data) {
 	AddVideoFromDB(data[0].list);
 });
 
-socket.on('animations', function (data) {
+socket.on('send:GUI', function (data) {
   data = StringUtils.strdecode(data);
   sAnimationLoader.Load(data);
 });

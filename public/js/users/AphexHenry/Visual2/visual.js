@@ -5,14 +5,10 @@ Visual.prototype.Setup = function() {
                                  new THREE.MeshNormalMaterial());
     this.sphere.overdraw = true;
     this.scene.add(this.sphere);
-
-    this.timer = 0.;
-                             }
+                                                    }
 
 Visual.prototype.Update = function(aDelta) {
-	this.timer += aDelta * 2;
-    this.sphere.scale.x = this.sphere.scale.y = this.sphere.scale.z = 
-       (0.7);
-	this.sphere.position.x = 500 * Math.cos(this.timer);
-	this.sphere.position.y = 500 * Math.sin(this.timer * 2.);
-                             }
+    this.sphere.scale.x = control.GetNumber('sizeBall');
+	this.sphere.position.x = 500 * Math.cos(Timer + 5 * Math.cos(Timer * 1.6));
+	this.sphere.position.y = 500 * Math.sin(Timer * 2.5);
+                                                    }

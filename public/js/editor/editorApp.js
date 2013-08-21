@@ -2,22 +2,23 @@
 var sURLHash = "uniqueToken";
 rtcManager.connect(sURLHash);
 var sCommunicationManager = new CommunicationManager();
+var sAnimationLoader = new AnimationLoader();
 
 $('#CodeGUISwitch').on('switch-change', function (e, data) 
 {
-	$('#GUI').removeClass('active');
-	$('#code').removeClass('active');
+	$('#GUI').removeClass('unactive');
+	$('#code').removeClass('unactive');
 	if(!data.value)
 	{
-		$('#GUI').addClass('active');
+		$('#code').addClass('unactive');
 	}
 	else
 	{
-		$('#code').addClass('active');
+		$('#GUI').addClass('unactive');
 	}
 });
 
-function AddSlider(aName, value, aMin, aMax, id)
+function AddSlider(aName, value, aMin, aMax, isGlobal, id)
 {
   if(!isdefined(aMin))
   {
@@ -29,23 +30,117 @@ function AddSlider(aName, value, aMin, aMax, id)
       aMax = 1.;
   }
 
-  var $lBase = $("<div class='NewEl'> </div>");
-  $lBase.append("<h4>" + aName + "</h4><span class='span2 NewEl'></span>");
-  
-  var $lSlider = $('<input class="mySlider span3" type="text" name="' + id + '" value="0" data-slider-min="' + aMin +'" data-slider-max="' + aMax + '" data-slider-step="0.01" data-slider-value="0" data-slider-orientation="horizontal" data-slider-id="leftSpeedS" data-slider-selection="before" data-slider-tooltip="hide"></input>');
-  $lBase.append($lSlider);
+  var $lRealBase = $("<div class='newEl lined'></div>");
+  var $lBaseNum = $("<div class='row'> </div>");
+  var $lBaseText = $("<div class='row'> </div>");
+  $lRealBase.append('<button type="button" class="btn btn-danger removeButton" onclick="removeInput(this)">remove</button>')
+  $lRealBase.append($lBaseText);
+  $lRealBase.append($lBaseNum);
+  $('#GUI').append($lRealBase);
 
-  $('#GUI').append($lBase);
+  // $lSlider.slider('setValue', value);
+  $lBaseText.append('<h4>number input');
 
-  $lSlider.slider('setValue', value);
+  var lInputNameContainer = $('<div class="input-group col-2"></div>')
+  $lBaseNum.append(lInputNameContainer);
+  var $inputName = $('<input type="text" class="form-control col-1" value="' + aName + '">');
+  lInputNameContainer.append($('<span class="input-group-addon">name</span>'));
+  lInputNameContainer.append($inputName);
+  // $lBaseNum.append($('<div class="input-group col-2"><span class="input-group-addon">name</span><input type="text" class="form-control col-1" value="' + aName + '"></div>'))
+
+  var $codeCopy = $('<input title="get value" class="codeCopyText col-4" onClick="this.select();" type="text" readonly value="' + 'control.GetNumber(' + "'"  + aName + "'" + ')"></input><br>');
+  var $lcodeCopyBlock = $('<div class="CodeCopy row col-4">');
+  $lcodeCopyBlock.append('<h4>Access in your code:</h4>');
+  $lcodeCopyBlock.append($codeCopy);
+  $lBaseNum.append($lcodeCopyBlock);
+  $inputName[0].oninput = function() {
+    $codeCopy.val('control.GetNumber(' + "'"  + $inputName.val() + "'" + ')');
+  };
+
+  var $lValue = appendNumberInputTo($lBaseNum, value, "value");
+  var $lMin = appendNumberInputTo($lBaseNum, aMin, "min");
+  var $lMax = appendNumberInputTo($lBaseNum, aMax, "max");
+
+  $lRealBase[0].GUI = {type:'number', value:$lValue, min:$lMin, max:$lMax, name:$inputName, id:$inputName};
+}
+
+function appendNumberInputTo(ajQEl, value, aName)
+{
+  var $lBase = $('<div class="input-group col-2"></div>');
+  $lBase.append('<span class="input-group-addon">' + aName + '</span>');
+  $lInput = $('<input type="number" class="form-control col-1" step="0.1" value="' + value + '">');
+  $lBase.append($lInput);
+  ajQEl.append($lBase);
+  return $lInput;
+}
+
+function removeInput(that)
+{
+  var root = $(that).parent('.lined');
+  root.remove();
+  // $('#GUI').remove(root);
 }
 
 function AddButton(aName, aId)
 {
-  var $lButton = $('<button type="button" name="'+ aId + '" class="btn">' + aName + '</button>');
+  var $lButton = $('<button type="button" name="'+ aId + '" class="btn">' + aName + '</button> <br>');
   $('#GUI').append($lButton);
-
 }
 
-// AddSlider("test", 1, 0, 2, "test");
-AddButton("testBut", "testBut");
+function AddColor(aName, value, aId)
+{
+  // add colored box.
+  var $indicator = $('<input type="text" id="color" name="color" value="' + value + '" > defaultValue </input>');
+  function colorPickerChange(ev)
+  {
+    $indicator.css('background-color', ev.color);
+    $indicator.val(ev.color);
+  }
+
+  //  input line.
+  var $lBaseNum = $("<div class='NewEl lined'> </div>");
+  $lBaseNum.append('<button type="button" class="btn btn-danger removeButton" onclick="removeInput(this)">remove</button>');
+  $('#GUI').append( $lBaseNum );
+   $($lBaseNum).append( "<h4>color input</h4>" );
+  var lContainer = $("<div class='row NewEl form-item'></div>");
+  var newPickerDiv = $("<div id='picker' class='col-3'></div>");
+  $lBaseNum.append(lContainer);
+
+  var lInputNameContainer = $('<div class="input-group col-2"></div>')
+  lContainer.append(lInputNameContainer);
+  var $inputName = $('<input type="text" class="form-control col-1" value="' + aName + '">');
+  lInputNameContainer.append($('<span class="input-group-addon">name</span>'));
+  lInputNameContainer.append($inputName);
+  lContainer.append($indicator);
+  lContainer.append(newPickerDiv);
+  var $codeCopy = $('<input title="get hex value (' + "'#0f0f0f')" + '" class="codeCopyText col-4" onClick="this.select();" type="text" readonly value="' + 'control.GetColor(' + "'"  + aName + "'" + ')"></input><br>');
+  var $codeCopy2 = $('<input title="get rgb value (' + "{r:1, g:0.4, b:0.1})" + '" class="codeCopyText col-4" type="text" onClick="this.select();"  readonly value="' + 'control.GetColorRGB(' + "'"  + aName + "'" + ')"></input><br>');
+  var $codeCopy3 = $('<input class="codeCopyText col-4" type="text" onClick="this.select();"  readonly value="' + 'control.GetColorHSV(' + "'"  + aName + "'" + ')"></input><br>');
+  var $lcodeCopyBlock = $('<div class="CodeCopy row col-4">');
+  $lcodeCopyBlock.append('<h4>Access in your code:</h4>');
+  $lcodeCopyBlock.append($codeCopy);
+  $lcodeCopyBlock.append($codeCopy2);
+  $lcodeCopyBlock.append($codeCopy3);
+  lContainer.append($lcodeCopyBlock);
+  $inputName[0].oninput = function() {
+    $codeCopy.val('control.GetColor(' + "'"  + $inputName.val() + "'" + ')')
+    $codeCopy2.val('control.GetColorRGB(' + "'"  + $inputName.val() + "'" + ')')
+    $codeCopy3.val('control.GetColorHSV(' + "'"  + $inputName.val() + "'" + ')')
+
+  };
+  var lPicker = $.farbtastic($(newPickerDiv), colorPickerChange, aId);
+  lPicker.setColor(value);
+
+  $lBaseNum[0].GUI = {type:'color', value:$indicator, name:$inputName, id:$inputName};
+}
+
+function AddDefaultNumber()
+{
+  AddSlider("name", 0, 0, 1, false, "display name");
+}
+
+function AddDefaultColor()
+{
+  AddColor("name", '#ffffff', 'name')
+}
+

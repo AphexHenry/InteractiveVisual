@@ -1,7 +1,5 @@
-function GUI()
-{
-	this.name = "tutorial";
-	this.ListControl = [];
-	this.ListControl.push({type:'slider', min:0.1, max:3, name:'radius', value:1});
-	this.ListControl.push({type:'color', name:'color', value:'#05f474'});
+function GUI(){
+this.ListControl = [];
+this.ListControl.push({type:'number', name:'sizeBall', value:'1', min:'0', max:'2'});
+this.ListControl.push({type:'color', name:'colorBall', value:'#ffffff'});
 }

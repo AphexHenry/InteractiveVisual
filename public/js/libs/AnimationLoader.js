@@ -11,6 +11,7 @@ function AnimationLoader()
 AnimationLoader.prototype.Load = function(array)
 {
 	this.animationToLoad = this.animationToLoad.concat(array);
+	this.Update();
 }
 
 AnimationLoader.prototype.Update = function(aTimeInterval)

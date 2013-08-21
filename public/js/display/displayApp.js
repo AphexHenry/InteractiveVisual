@@ -12,7 +12,7 @@ var postprocessing = { enabled  : true };
 
 var sAudioInput = new AudioInput();
 var sVisuals = [];
-var sGlobalTimer = Date.now() / 1000;
+var Timer = Date.now() / 1000;
 sTempoManager = new TempoManager();
 var sAnimationLoader = new AnimationLoader();
 
@@ -122,8 +122,8 @@ function onDocumentTouchMove( event ) {
 function animate() {
 
     var lNow = Date.now() / 1000.;
-    var lTimeElapsed = lNow - sGlobalTimer;
-    sGlobalTimer = lNow;
+    var lTimeElapsed = lNow - Timer;
+    Timer = lNow;
 
     requestAnimationFrame( animate );
 

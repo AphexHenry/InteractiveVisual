@@ -1,4 +1,8 @@
 
+body
+{
+	overflow-x:hidden;
+}
 
 .CodeMirror {
 height: auto;
@@ -12,12 +16,28 @@ overflow-x: auto;
 	position:fixed;
 	top:20px;
 	right:20px;
+	z-index: 1000;
 }
 
 .mySwitch{
-	position:absolute;
 	right:20px;
+	float:right;
 	margin-top: 20px;
+}
+
+.removeButton
+{
+	float:right;
+}
+
+.CodeCopy
+{
+	float:right;
+}
+
+.codeCopyText
+{
+	width:250px;
 }
 
 #CodeGUISwitch
@@ -25,6 +45,12 @@ overflow-x: auto;
 	position:fixed;
 	top:20px;
 	right:47%;
+	z-index: 1000;
+}
+
+.form-control
+{
+	width:100px;
 }
 
 .blockCode
@@ -33,20 +59,53 @@ overflow-x: auto;
 	background-color: #f8f8f8;
 }
 
-#code .active
+#Codes
 {
-	margin-left: -100%;
-	transition: margin-left 0.3s linear;
-	-moz-transition: margin-left 0.3s linear;
-	-o-transition: margin-left 0.3s linear;
-	-webkit-transition: margin-left 0.3s linear;
+	margin-top:40px;
 }
 
-#GUI .active
+#code,
+#GUI
 {
+	position:absolute;
+	width:90%;
+	margin-top: 30px;
+	opacity:1;
+	transition: margin-left 0.5s ease-in-out, opacity 0.5s linear;
+	-moz-transition: margin-left 0.5s ease-in-out, opacity 0.5s linear;
+	-o-transition: margin-left 0.5s ease-in-out, opacity 0.5s linear;
+	-webkit-transition: margin-left 0.5s ease-in-out, opacity 0.5s linear;
+}
+
+.lined
+{
+	margin-top: 20px;
+	border-style:solid;
+	border-width:1px;
+	border-color: #a9a9a9;
+	background-color: #f9f9f9;
+	padding: 20px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+#code.unactive
+{
+	opacity:0;
 	margin-left: -100%;
-	transition: margin-left 0.3s linear;
-	-moz-transition: margin-left 0.3s linear;
-	-o-transition: margin-left 0.3s linear;
-	-webkit-transition: margin-left 0.3s linear;
+/*	transition: margin-left 0.3s linear, opacity 0.3s linear;
+	-moz-transition: margin-left 0.3s linear, opacity 0.3s linear;
+	-o-transition: margin-left 0.3s linear, opacity 0.3s linear;
+	-webkit-transition: margin-left 0.3s linear, opacity 0.3s linear;*/
+}
+
+#GUI.unactive
+{
+	opacity:0;
+	margin-left: 100%;
+/*	transition: margin-left 0.3s linear, opacity 0.3s linear;
+	-moz-transition: margin-left 0.3s linear, opacity 0.3s linear;
+	-o-transition: margin-left 0.3s linear, opacity 0.3s linear;
+	-webkit-transition: margin-left 0.3s linear, opacity 0.3s linear;*/
 }

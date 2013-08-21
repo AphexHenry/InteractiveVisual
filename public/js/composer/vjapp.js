@@ -57,7 +57,7 @@ $(function () {
     GetAnimations();
   }
 
-  control.AddButton('UpdateCode', UpdateCode);
+  control.AddButton('UpdateGUI', UpdateCode);
 
 }());
 

@@ -109,6 +109,12 @@ CodeParser.prototype.GetCodeFunction = function(aObject)
 
 CodeParser.prototype.Save = function() 
 {
+	this.SaveCode();
+	this.SaveGUI();
+}
+
+CodeParser.prototype.SaveCode = function()
+{
 	var codeStr;
 	var lVal;
 	var fileString = "function Visual() {} \n";
@@ -135,4 +141,35 @@ CodeParser.prototype.Save = function()
 	}
 
 	SaveCode(fileString);
+}
+
+CodeParser.prototype.SaveGUI = function()
+{
+	var lGUIString = "function GUI(){\nthis.ListControl = [];\n";
+	var GUIChildren = $('.lined');
+	for(var i = 0;  i < GUIChildren.length; i++)
+	{
+		var lElGUI = GUIChildren[i].GUI;
+		switch(lElGUI.type)
+		{
+			case "color":
+				lGUIString += "this.ListControl.push({type:'color'";
+				lGUIString += ", name:'" + lElGUI.name.val() + "'";
+				lGUIString += ", value:'" + lElGUI.value.val() + "'";
+				lGUIString += "});\n";
+				break;
+			case "number":
+				lGUIString += "this.ListControl.push({type:'number'";
+				lGUIString += ", name:'" + lElGUI.name.val() + "'";
+				lGUIString += ", value:'" + lElGUI.value.val() + "'";
+				lGUIString += ", min:'" + lElGUI.min.val() + "'";
+				lGUIString += ", max:'" + lElGUI.max.val() + "'";
+				lGUIString += "});\n";
+				break;
+			default:
+				break;
+		}
+	}
+	lGUIString += '}';
+	SaveGUI(lGUIString);
 }
