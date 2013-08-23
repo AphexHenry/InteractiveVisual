@@ -2,6 +2,7 @@ extends layout
 
 block content
 	div(id="app")
+		div(class="btn-group-vertical", id="listVisualButtons")
 		hr(class="separator")
 		div(class="row")
 			div(class="col-6")
@@ -13,7 +14,7 @@ block content
 							button(type="button", class="btn btn-primary", name="dot") Dot
 							button(type="button", class="btn btn-primary", name="convolution") convolution
 							button(type="button", class="btn btn-primary", name="screen") screen
-			div(class="col-6")
+			div(class="col-4")
 				div(id="LeftGUI")
 					h3() Specific
 					div(id="elementTableSpec", class="groupGUI")

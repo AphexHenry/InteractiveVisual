@@ -175,12 +175,13 @@ function loadjsfile(filename, callback, isGUI)
     var fileref=document.createElement('script');
     fileref.setAttribute("type","text/javascript");
     fileref.setAttribute("src", filename);
-    fileref.onload = function(){
-        callback(isGUI);
-    };
     fileref.onerror = function(){console.log("wrong file.")};
 
     oHead.appendChild(fileref);
+
+    fileref.onload = function(){
+        setTimeout(callback(isGUI), 200);
+    };
 }
 
 function getFunctionByName(functionName) {

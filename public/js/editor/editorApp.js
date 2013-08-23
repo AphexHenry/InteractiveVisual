@@ -3,6 +3,15 @@ var sURLHash = "uniqueToken";
 rtcManager.connect(sURLHash);
 var sCommunicationManager = new CommunicationManager();
 var sAnimationLoader = new AnimationLoader();
+var $sBaseGUISpec = $('#GUIBase');
+
+function animate() 
+{
+  sAnimationLoader.Update();
+  window.requestAnimationFrame( animate );
+}
+
+animate();
 
 $('#CodeGUISwitch').on('switch-change', function (e, data) 
 {
@@ -17,6 +26,19 @@ $('#CodeGUISwitch').on('switch-change', function (e, data)
 		$('#GUI').addClass('unactive');
 	}
 });
+
+function AddYourButtons(aGUIObj)
+{
+    var button = $('<li onclick="sAnimationLoader.LoadGUIIndex(this.GUI.index)"><a>' + aGUIObj.GUI.name + '</a></li>')
+    var $anchor = $('#AnimationsAnchor');
+    $anchor.append(button);
+    button[0].GUI = aGUIObj;
+}
+
+function ManageAnimationLoaded(aUser, aVisual)
+{
+  
+}
 
 function AddSlider(aName, value, aMin, aMax, isGlobal, id)
 {
@@ -36,7 +58,7 @@ function AddSlider(aName, value, aMin, aMax, isGlobal, id)
   $lRealBase.append('<button type="button" class="btn btn-danger removeButton" onclick="removeInput(this)">remove</button>')
   $lRealBase.append($lBaseText);
   $lRealBase.append($lBaseNum);
-  $('#GUI').append($lRealBase);
+  $sBaseGUISpec.append($lRealBase);
 
   // $lSlider.slider('setValue', value);
   $lBaseText.append('<h4>number input');
@@ -84,7 +106,7 @@ function removeInput(that)
 function AddButton(aName, aId)
 {
   var $lButton = $('<button type="button" name="'+ aId + '" class="btn">' + aName + '</button> <br>');
-  $('#GUI').append($lButton);
+  $sBaseGUISpec.append($lButton);
 }
 
 function AddColor(aName, value, aId)
@@ -100,7 +122,7 @@ function AddColor(aName, value, aId)
   //  input line.
   var $lBaseNum = $("<div class='NewEl lined'> </div>");
   $lBaseNum.append('<button type="button" class="btn btn-danger removeButton" onclick="removeInput(this)">remove</button>');
-  $('#GUI').append( $lBaseNum );
+  $sBaseGUISpec.append( $lBaseNum );
    $($lBaseNum).append( "<h4>color input</h4>" );
   var lContainer = $("<div class='row NewEl form-item'></div>");
   var newPickerDiv = $("<div id='picker' class='col-3'></div>");

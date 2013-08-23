@@ -135,14 +135,44 @@ io.sockets.on('connection', function (socket) {
         c.onSocketDisconnect(io, socket, connectionEasyRtcId);
     });
 
-    socket.on('get:GUI', function(aData)
-    {   
-        socket.emit('send:GUI', JSON.stringify([{user:aData.user, visual:aData.name, file:"GUI.js"}]));
-    });
+    // socket.on('get:GUI', function(aData)
+    // {   
+    //     fs.readdir("public/js/users/" + aData.user + "/", function(err, data){
+    //       if(err)
+    //       {
+    //         console.log("error looking in directoriess" + err);
+    //       }
+    //       else
+    //       {
+    //         var list = [];
+    //         for(var i = 0; i < data.length; i++)
+    //         {
+    //           list.push({user:aData.user, visual:data[i], file:"GUI.js"});
+    //         }
+    //         socket.emit('send:GUI', JSON.stringify(list));
+    //       }
+    //     });
+        
+    // });
 
     socket.on('get:Code', function(aData)
     {   
-      socket.emit('send:code', JSON.stringify({user:aData.user, visual:aData.name, file:"visual.js"}));
+          fs.readdir("public/js/users/" + aData.user + "/", function(err, data){
+          if(err)
+          {
+            console.log("error looking in directoriess" + err);
+          }
+          else
+          {
+            var list = [];
+            for(var i = 0; i < data.length; i++)
+            {
+              list.push({user:aData.user, visual:data[i], file:"visual.js"});
+              list.push({user:aData.user, visual:data[i], file:"GUI.js"});
+            }
+            socket.emit('send:code', JSON.stringify(list));
+          }
+        });
     });
 
     socket.on('save:code', function(aData)
@@ -175,10 +205,18 @@ if (easyrtcCfg.updateCheckEnable) {
     g.updateCheck(http);
 }
 
+app.post('/login', function(req, res) {
+  console.log("login");
+  console.log(req.body);
+  // res.send('You sent the name "' + req.body.name + '".');
+});
+
 app.get('/', function(req, res) {
-  res.render('index', {
-          user: 'AphexHenry'
-        });
+  res.render('login');
+});
+
+app.get('/composer', function(req, res) {
+  res.render('composer');
 });
 
 app.get('/display', function(req, res) {

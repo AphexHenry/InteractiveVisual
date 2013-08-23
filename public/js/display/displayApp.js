@@ -85,6 +85,15 @@ function init() {
     control.AddButton('UpdateCode', UpdateCode);
 }
 
+function ManageAnimationLoaded(aUser, aVisual)
+{
+    var lNewVisu = new CompleteVisualizer(Visual);
+    lNewVisu._mUser = aUser;
+    lNewVisu._mVisual = aVisual;
+    lNewVisu.SetupAll();
+    sVisuals[0] = lNewVisu;
+}
+
 function tickTempo()
 {
     sTempoManager.Tick();

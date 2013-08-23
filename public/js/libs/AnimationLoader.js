@@ -1,5 +1,8 @@
 
-var sGUI;
+var sGUIs = [];
+var sVisuals = [];
+var sIdGUISelected = 0;
+var sIdGUISelectedPrev = -1;
 
 function AnimationLoader()
 {
@@ -18,6 +21,18 @@ AnimationLoader.prototype.Update = function(aTimeInterval)
 {
 	if(this.animationIndex >= this.animationToLoad.length)
 	{
+		if(sIdGUISelected != sIdGUISelectedPrev)
+		{
+			if(sGUIs.length > sIdGUISelected)
+			{
+				this.LoadGUI(sGUIs[sIdGUISelected]);
+				if(sVisuals.length > sIdGUISelected)
+				{
+					codeParser.Parse(sVisuals[sIdGUISelected].Visual);
+				}
+				sIdGUISelectedPrev = sIdGUISelected;
+			}
+		}
 		return;
 	}
 
@@ -25,40 +40,72 @@ AnimationLoader.prototype.Update = function(aTimeInterval)
 	if(this.animationIndex != this.animationIndexLast)
 	{
 		this.animationIndexLast = this.animationIndex;
-		loadjsfile("js/users/" + this.animationToLoad[this.animationIndex].user + "/" + this.animationToLoad[this.animationIndex].visual + "/" +this.animationToLoad[this.animationIndex].file, function(aIsGUI){that.AnimationLoaded(aIsGUI);}, this.animationToLoad[this.animationIndex].file == 'GUI.js');
+		var lFileId = this.animationToLoad[this.animationIndex].user + "/" + this.animationToLoad[this.animationIndex].visual + "/" +this.animationToLoad[this.animationIndex].file;
+		loadjsfile("js/users/" + lFileId, function(aIsGUI){
+			if(aIsGUI)
+			{
+				that.GUILoaded(lFileId);
+			}
+			else
+			{
+				that.AnimationLoaded(lFileId);
+			}
+			that.animationIndex++;
+		}, this.animationToLoad[this.animationIndex].file == 'GUI.js');
 	}
 }
 
-AnimationLoader.prototype.AnimationLoaded = function(aIsGUI)
+AnimationLoader.prototype.GUILoaded = function(aFileId)
 {
-	if(aIsGUI)
+	var thisGUI = new GUI();
+	var lGUIObj = {GUI:thisGUI, id:aFileId, index:sGUIs.length};
+	sGUIs.push(lGUIObj);
+	if(isdefined(AddYourButtons))
 	{
-		var thisGUI = new GUI();
-		var controlList = thisGUI.ListControl;
-		for(var i = 0; i < controlList.length; i++)
+		AddYourButtons(lGUIObj);
+	}
+}
+
+AnimationLoader.prototype.reset = function()
+{
+	sGUIs = [];
+	sIdGUISelectedPrev = -1;
+}
+
+AnimationLoader.prototype.LoadGUIIndex = function(aIndex)
+{
+	sIdGUISelected = aIndex;
+}
+
+AnimationLoader.prototype.LoadGUI = function(aGUI)
+{
+	$sBaseGUISpec.empty();
+
+	var controlList = aGUI.GUI.ListControl;
+	for(var i = 0; i < controlList.length; i++)
+	{
+		var lId = aGUI.id;
+		switch(controlList[i].type)
 		{
-			var lId = this.animationToLoad[this.animationIndex].user + this.animationToLoad[this.animationIndex].visual + controlList[i].name;
-			switch(controlList[i].type)
-			{
-				case 'color':
-				AddColor(controlList[i].name, controlList[i].value, lId)
-				break;
-				case 'slider':
-				case 'number':
-				case 'float':
-				AddSlider(controlList[i].name, controlList[i].value, controlList[i].min, controlList[i].max, false, lId)
-				break;
-			}
+			case 'color':
+			AddColor(controlList[i].name, controlList[i].value, lId)
+			break;
+			case 'slider':
+			case 'number':
+			case 'float':
+			AddSlider(controlList[i].name, controlList[i].value, controlList[i].min, controlList[i].max, false, lId)
+			break;
 		}
 	}
-	else
-	{
-		var lNewVisu = new CompleteVisualizer(Visual);
-		lNewVisu._mUser = this.animationToLoad[this.animationIndex].user;
-		lNewVisu._mVisual = this.animationToLoad[this.animationIndex].visual;
-		lNewVisu.SetupAll();
-		sVisuals[0] = lNewVisu;
-	}
+}
 
-	this.animationIndex++;
+AnimationLoader.prototype.AnimationLoaded = function(aFileId)
+{	
+	var lVisualObj = {Visual:new Visual(), id:aFileId, index:sVisuals.length};
+	sVisuals.push(lVisualObj);
+
+	if(isdefined(ManageAnimationLoaded))
+	{
+    	ManageAnimationLoaded(this.animationToLoad[this.animationIndex].user, this.animationToLoad[this.animationIndex].visual);
+	}
 }

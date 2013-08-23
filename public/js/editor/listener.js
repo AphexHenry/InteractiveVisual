@@ -4,10 +4,7 @@ var codeParser = new CodeParser();
 
 socket.on('send:code', function (data) {
 data = StringUtils.strdecode(data);
-  loadjsfile("js/users/" + data.user + "/" + data.visual + "/" + data.file, 
-  	function(aData){
-  		codeParser.Parse(new Visual());
-  });
+  sAnimationLoader.Load(data);
 });
 
 socket.on('send:GUI', function (data) {

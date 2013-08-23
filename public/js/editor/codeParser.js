@@ -14,6 +14,7 @@ function CodeParser()
 
 CodeParser.prototype.Parse = function(aData) 
 {
+	$('#code').empty();
 	this.SetupFunction(aData.Setup, "Setup");
 	this.SetupFunction(aData.SetupScene, "SetupScene");
 	this.SetupFunction(aData.SetupScene, "SetupCamera");

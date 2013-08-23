@@ -48,12 +48,8 @@ $(function () {
 
   function UpdateCode()
   {
-    // var children = $sBaseGUISpec.children();
-    $sBaseGUISpec.empty();
-    // for(i in children)
-    // {
-      // sBaseGUISpec.remove(children);
-    // }
+    var children = $sBaseGUISpec.children();
+    EmptyGUIContainer();
     GetAnimations();
   }
 
@@ -61,10 +57,24 @@ $(function () {
 
 }());
 
+function EmptyGUIContainer()
+{
+  $sBaseGUISpec.empty();
+  $('#listVisualButtons').empty();
+  sAnimationLoader.reset();
+}
+
+function AddYourButtons(aGUIObj)
+{
+    var button = $('<button type="button" class="btn btn-default" onclick="sAnimationLoader.LoadGUIIndex(this.GUI.index)">' + aGUIObj.GUI.name + '</button>')
+  $('#listVisualButtons').append(button);
+  button[0].GUI = aGUIObj;
+}
+
 function AddColor(aName, value, aId)
 {
-  $sBaseGUISpec.append( "<h3>" + aName + "</h3>" );
-  var lContainer = $("<div class='row NewEl form-item'></div>");
+  var lContainer = $("<div class='NewEl form-item'></div>");
+  lContainer.append( "<h4>" + aName + "</h4>" );
   var newPickerDiv = $("<div id='picker'></div>")
   $sBaseGUISpec.append(lContainer);
   lContainer.append("<span class='span2 NewEl'>");
