@@ -24,6 +24,19 @@ block content
 			div(id="GUIBase")
 		div(id="code", class="item")
 
+	<!-- Modal -->
+	div(class="modal fade", id="myModal", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+		div(class="modal-dialog")
+			div(class="modal-content")
+				div(class="modal-header")
+					button(type="button", class="close", data-dismiss="modal", aria-hidden="true") close
+					h4(class="modal-title") Synchronize other windows
+				div(class="modal-body")
+					h5() Would you like to sync other windows?
+				div(class="modal-footer")
+					button(type="button", class="btn btn-default", data-dismiss="modal") Sync
+					button(type="button", class="btn btn-primary", data-dismiss="modal") Don't Sync
+
 	script(src="/socket.io/socket.io.js")
 
 	link(rel='stylesheet', href="js/libs/codemirror/lib/codemirror.css", charset='utf-8', media='screen')

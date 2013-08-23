@@ -9,7 +9,14 @@ function rtcManager()
 function addToConversation(who, content) 
 {
     console.log("data received = " + content + " from " + who);
-    control.Parse(content);
+    try
+    {
+        control.Parse(content);    
+    }
+    catch(err)
+    {
+        
+    }
 }
 
 rtcManager.prototype.connect = function(aChannel)

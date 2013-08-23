@@ -28,7 +28,14 @@ AnimationLoader.prototype.Update = function(aTimeInterval)
 				this.LoadGUI(sGUIs[sIdGUISelected]);
 				if(sVisuals.length > sIdGUISelected)
 				{
-					codeParser.Parse(sVisuals[sIdGUISelected].Visual);
+					try 
+					{
+				        codeParser.Parse(sVisuals[sIdGUISelected].Visual);
+				    }
+				    catch(err) 
+				    {
+				        // Handle error(s) here
+				    }
 				}
 				sIdGUISelectedPrev = sIdGUISelected;
 			}
@@ -44,26 +51,20 @@ AnimationLoader.prototype.Update = function(aTimeInterval)
 		loadjsfile("js/users/" + lFileId, function(aIsGUI){
 			if(aIsGUI)
 			{
-				that.GUILoaded(lFileId);
+				that.GUILoaded();
 			}
 			else
 			{
-				that.AnimationLoaded(lFileId);
+				that.AnimationLoaded();
 			}
 			that.animationIndex++;
 		}, this.animationToLoad[this.animationIndex].file == 'GUI.js');
 	}
 }
 
-AnimationLoader.prototype.GUILoaded = function(aFileId)
+AnimationLoader.prototype.GetCurrentFileID = function()
 {
-	var thisGUI = new GUI();
-	var lGUIObj = {GUI:thisGUI, id:aFileId, index:sGUIs.length};
-	sGUIs.push(lGUIObj);
-	if(isdefined(AddYourButtons))
-	{
-		AddYourButtons(lGUIObj);
-	}
+	return this.animationToLoad[this.animationIndex].user + this.animationToLoad[this.animationIndex].visual;
 }
 
 AnimationLoader.prototype.reset = function()
@@ -93,19 +94,37 @@ AnimationLoader.prototype.LoadGUI = function(aGUI)
 			case 'slider':
 			case 'number':
 			case 'float':
-			AddSlider(controlList[i].name, controlList[i].value, controlList[i].min, controlList[i].max, false, lId)
+			AddSlider(controlList[i].name, controlList[i].value, controlList[i].min, controlList[i].max, false, lId + controlList[i].name)
 			break;
 		}
 	}
 }
 
-AnimationLoader.prototype.AnimationLoaded = function(aFileId)
-{	
-	var lVisualObj = {Visual:new Visual(), id:aFileId, index:sVisuals.length};
-	sVisuals.push(lVisualObj);
-
-	if(isdefined(ManageAnimationLoaded))
+AnimationLoader.prototype.GUILoaded = function()
+{
+	var thisGUI = new GUI();
+	var lGUIObj = {GUI:thisGUI, id:this.GetCurrentFileID(), index:sGUIs.length};
+	sGUIs.push(lGUIObj);
+	try 
 	{
-    	ManageAnimationLoaded(this.animationToLoad[this.animationIndex].user, this.animationToLoad[this.animationIndex].visual);
-	}
+        AddYourButtons(lGUIObj);
+    }
+    catch(err) 
+    {
+        // Handle error(s) here
+    }
+}
+
+AnimationLoader.prototype.AnimationLoaded = function()
+{	
+	var lVisualObj = {Visual:new Visual(), id:this.GetCurrentFileID(), index:sVisuals.length};
+	sVisuals.push(lVisualObj);
+	try 
+	{
+        ManageAnimationLoaded(this.GetCurrentFileID());
+    }
+    catch(err) 
+    {
+        // Handle error(s) here
+    }
 }

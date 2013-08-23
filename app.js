@@ -167,8 +167,8 @@ io.sockets.on('connection', function (socket) {
             var list = [];
             for(var i = 0; i < data.length; i++)
             {
-              list.push({user:aData.user, visual:data[i], file:"visual.js"});
-              list.push({user:aData.user, visual:data[i], file:"GUI.js"});
+              list.push({user:aData.user, visual:data[i], file:"visual.js", isGUI:false});
+              list.push({user:aData.user, visual:data[i], file:"GUI.js", isGUI:true});
             }
             socket.emit('send:code', JSON.stringify(list));
           }

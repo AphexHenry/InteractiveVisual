@@ -3,25 +3,14 @@ var socket  = io.connect();
 var codeParser = new CodeParser();
 
 socket.on('send:code', function (data) {
-data = StringUtils.strdecode(data);
-  sAnimationLoader.Load(data);
-});
-
-socket.on('send:GUI', function (data) {
   data = StringUtils.strdecode(data);
   sAnimationLoader.Load(data);
 });
 
 function GetCode()
 {
-	var object = {user:NAME_USER, name:NAME_VISUAL};
-  	socket.emit('get:Code', object);
-}
-
-function GetGUI()
-{
-	var object = {user:NAME_USER, name:NAME_VISUAL};
-  	socket.emit('get:GUI', object);
+	var object = {user:NAME_USER};
+  socket.emit('get:Code', object);
 }
 
 function SaveCode(aCode)
@@ -45,4 +34,3 @@ socket.on('GUISaved', function(){
 });
 
 GetCode();
-GetGUI();

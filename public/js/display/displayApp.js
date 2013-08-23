@@ -11,7 +11,7 @@ var windowHalfY = window.innerHeight / 2;
 var postprocessing = { enabled  : true };
 
 var sAudioInput = new AudioInput();
-var sVisuals = [];
+var sVisualsComplete = [];
 var Timer = Date.now() / 1000;
 sTempoManager = new TempoManager();
 var sAnimationLoader = new AnimationLoader();
@@ -20,6 +20,8 @@ init();
 animate();
 
 function init() {
+
+    $sBaseGUISpec = $('');
 
     container = document.createElement( 'div' );
     document.body.appendChild( container );
@@ -41,17 +43,17 @@ function init() {
     
     function compoSwitchConvo()
     {
-        sVisuals[0].ResetShaders("focus");
+        sVisualsComplete[0].ResetShaders("focus");
     }
 
     function compoSwitchScreen()
     {
-        sVisuals[0].ResetShaders("film");   
+        sVisualsComplete[0].ResetShaders("film");   
     }
 
     function compoSwitchDot()
     {
-        sVisuals[0].ResetShaders("dotscreen");   
+        sVisualsComplete[0].ResetShaders("dotscreen");   
     }
 
     control.AddButton('tempo', tickTempo);
@@ -85,13 +87,12 @@ function init() {
     control.AddButton('UpdateCode', UpdateCode);
 }
 
-function ManageAnimationLoaded(aUser, aVisual)
+function ManageAnimationLoaded(aID)
 {
     var lNewVisu = new CompleteVisualizer(Visual);
-    lNewVisu._mUser = aUser;
-    lNewVisu._mVisual = aVisual;
+    lNewVisu._mID = aID;
     lNewVisu.SetupAll();
-    sVisuals[0] = lNewVisu;
+    sVisualsComplete[0] = lNewVisu;
 }
 
 function tickTempo()
@@ -139,11 +140,11 @@ function animate() {
     sAudioInput.Update();
     sAnimationLoader.Update(lTimeElapsed);
 
-    for(var i = 0; i< sVisuals.length; i++)
+    for(var i = 0; i< sVisualsComplete.length; i++)
     {
-        sVisuals[i].effectBloom.screenUniforms[ "opacity" ].value = control.GetNumber('glow', true);
-        control.SetCurrentName(sVisuals[i]._mUser + sVisuals[i]._mVisual);
-        sVisuals[i].Update(lTimeElapsed);
+        sVisualsComplete[i].effectBloom.screenUniforms[ "opacity" ].value = control.GetNumber('glow', true);
+        control.SetCurrentName(sVisualsComplete[i]._mID);
+        sVisualsComplete[i].Update(lTimeElapsed);
     }
 
     sTempoManager.Update(lTimeElapsed);

@@ -43,11 +43,11 @@ Control.prototype.GetNumber = function(aName, aIsGeneral)
     var lReturn;
     if(isdefined(aIsGeneral) && aIsGeneral)
     {
-       lReturn = this.mapperSlider[aName]; 
+       lReturn = parseFloat(this.mapperSlider[aName]); 
     }
     else
     {
-        lReturn = this.mapperSlider[this.visuName + aName];
+        lReturn = parseFloat(this.mapperSlider[this.visuName + aName]);
     }
     if(!isdefined(lReturn))
         return 1;

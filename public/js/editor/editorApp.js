@@ -29,7 +29,11 @@ $('#CodeGUISwitch').on('switch-change', function (e, data)
 
 function AddYourButtons(aGUIObj)
 {
-    var button = $('<li onclick="sAnimationLoader.LoadGUIIndex(this.GUI.index)"><a>' + aGUIObj.GUI.name + '</a></li>')
+    var button = $('<li><a>' + aGUIObj.GUI.name + '</a></li>')
+    button.click(function(){
+      $('#myModal').modal()
+      sAnimationLoader.LoadGUIIndex(this.GUI.index);
+    })
     var $anchor = $('#AnimationsAnchor');
     $anchor.append(button);
     button[0].GUI = aGUIObj;
