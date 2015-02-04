@@ -1,7 +1,7 @@
 
-/**
- * Module dependencies.
- */
+// /**
+//  * Module dependencies.
+//  */
 var express = require('express')
   , http = require('http')
   , path = require('path')
@@ -201,13 +201,14 @@ io.sockets.on('connection', function (socket) {
 });
 
 // Checks to see if there is a newer version of easyRTC available
-if (easyrtcCfg.updateCheckEnable) {
-    g.updateCheck(http);
-}
+// if (easyrtcCfg.updateCheckEnable) {
+//     g.updateCheck(http);
+// }
 
 app.post('/login', function(req, res) {
   console.log("login");
   console.log(req.body);
+  res.render('editor');
   // res.send('You sent the name "' + req.body.name + '".');
 });
 
